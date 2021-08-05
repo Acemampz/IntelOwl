@@ -867,6 +867,30 @@
       }
     }
   },
+  "Intezer_Get": {
+    "type": "observable",
+    "python_module": "intezer_get.IntezerGet",
+    "description": "check if an hash was analyzed on Intezer",
+    "external_service": true,
+    "leaks_info": false,
+    "observable_supported": [
+      "hash"
+    ],
+    "config": {
+      "soft_time_limit": 20,
+      "queue": "default",
+      "detailed_analysis": true,
+    },
+    "secrets": {
+      "api_key_name": {
+        "env_var_key": "INTEZER_KEY",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    }
+  },
   "Intezer_Scan": {
     "type": "file",
     "python_module": "intezer_scan.IntezerScan",
@@ -875,11 +899,35 @@
     "external_service": true,
     "leaks_info": true,
     "supported_filetypes": [
-      "application/x-dosexec"
+      "application/x-dosexec",
+      "application/x-executable",
+      "application/zip",
+      "application/java-archive",
+      "application/vnd.android.package-archive",
+      "application/x-dex",
+      "application/msword",
+      "application/vnd.ms-office",
+      "application/vnd.ms-excel.addin.macroEnabled",
+      "application/x-mspublisher",
+      "application/vnd.ms-powerpoint",
+      "application/vnd.ms-excel",
+      "application/vnd.ms-excel.sheet.macroEnabled.12",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "text/x-ms-iqy",
+      "application/excel",
+      "text/xml",
+      "application/xml",
+      "application/encrypted"
     ],
     "config": {
       "soft_time_limit": 180,
-      "queue": "long"
+      "queue": "long",
+      "detailed_analysis": true,
+      "upload_file": true,
+      "max_tries": 200,
+      "poll_distance": 2
     },
     "secrets": {
       "api_key_name": {
@@ -1260,7 +1308,7 @@
     "config": {
       "soft_time_limit": 400,
       "queue": "default",
-      "upload_file": false,
+      "upload_file": true,
       "max_tries": 50
     },
     "secrets": {
