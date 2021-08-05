@@ -879,8 +879,7 @@
     ],
     "config": {
       "soft_time_limit": 20,
-      "queue": "default",
-      "detailed_analysis": true
+      "queue": "default"
     },
     "secrets": {
       "api_key_name": {
@@ -925,7 +924,6 @@
     "config": {
       "soft_time_limit": 300,
       "queue": "long",
-      "detailed_analysis": true,
       "upload_file": true,
       "max_tries": 200,
       "poll_distance": 2
@@ -1292,6 +1290,30 @@
     "secrets": {
       "api_key_name": {
         "env_var_key": "MAXMIND_KEY",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    }
+  },
+  "MWDB_Get": {
+    "type": "observable",
+    "python_module": "mwdb_get.MWDBGet",
+    "description": "check if an hash was analyzed on MWDB",
+    "disabled": false,
+    "external_service": true,
+    "leaks_info": false,
+    "observable_supported": [
+      "hash"
+    ],
+    "config": {
+      "soft_time_limit": 20,
+      "queue": "default"
+    },
+    "secrets": {
+      "api_key_name": {
+        "env_var_key": "MWDB_KEY",
         "type": "string",
         "required": true,
         "default": null,

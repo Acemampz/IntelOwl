@@ -58,7 +58,8 @@ class MWDB_Scan(FileAnalyzer):
         else:
             try:
                 file_info = mwdb.query_file(query)
-            except Exception:
+            except Exception as e:
+                logger.info(e, stack_info=True)
                 raise AnalyzerRunException(
                     "File not found in the MWDB. Set 'upload_file=true' "
                     "if you want to upload and poll results. "
