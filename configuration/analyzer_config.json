@@ -871,6 +871,7 @@
     "type": "observable",
     "python_module": "intezer_get.IntezerGet",
     "description": "check if an hash was analyzed on Intezer",
+    "disabled": false,
     "external_service": true,
     "leaks_info": false,
     "observable_supported": [
@@ -879,7 +880,7 @@
     "config": {
       "soft_time_limit": 20,
       "queue": "default",
-      "detailed_analysis": true,
+      "detailed_analysis": true
     },
     "secrets": {
       "api_key_name": {
@@ -922,7 +923,7 @@
       "application/encrypted"
     ],
     "config": {
-      "soft_time_limit": 180,
+      "soft_time_limit": 300,
       "queue": "long",
       "detailed_analysis": true,
       "upload_file": true,

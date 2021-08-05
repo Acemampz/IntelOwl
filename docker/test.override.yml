@@ -13,4 +13,4 @@ services:
   nginx:
     build:
       context: ..
-      dockerfile: docker/Dockerfile_nginx
+      dockerfile: docker/Dockerfile_nginx_develop

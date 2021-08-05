@@ -20,8 +20,6 @@ class IntezerGet(classes.ObservableAnalyzer):
 
     def set_params(self, params):
         self.__api_key = self._secrets["api_key_name"]
-        # retrieve detailed analysis
-        self.detailed_analysis = params.get("detailed_analysis", True)
         # intezer access token
         self.intezer_token = get_access_token(self.__api_key)
 
@@ -35,31 +33,18 @@ class IntezerGet(classes.ObservableAnalyzer):
         summary_url = f"/files/{self.observable_name}"
 
         dict_result = {}
-        analysis_succeded = False
         logger.info(f"intezer md5 about to get data for {self.observable_name}")
         response = session.get(self.base_url + summary_url)
-        response.raise_for_status()
-        json_response = response.json()
-        if response.status_code == 200:
+        if response.status_code == 404:
+            dict_result["not_found"] = True
+        elif response.status_code == 200:
+            json_response = response.json()
             dict_result = json_response
-            success = json_response.get("status", "")
-            if success == "succeeded":
-                analysis_succeded = True
         else:
+            response.raise_for_status()
             logger.debug(
                 f"intezer md5 {self.observable_name} status code {response.status_code}"
             )
-
-        # retrieve detailed analysis
-        if self.detailed_analysis and analysis_succeded:
-            analysis_id = dict_result.get("result", {}).get("analysis_id", "")
-            detailed_analysis_url = f"/analyses/{analysis_id}/root"
-            response = session.get(self.base_url + detailed_analysis_url)
-            if response.status_code == 200:
-                dict_result["detailed_analysis"] = response.json()
-                dict_result["detailed_analysis"]["success"] = True
-            else:
-                dict_result["detailed_analysis"] = {"success": False}
 
         return dict_result
 
