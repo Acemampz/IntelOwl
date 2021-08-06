@@ -24,9 +24,6 @@ class IntezerGet(classes.ObservableAnalyzer):
         self.intezer_token = get_access_token(self.__api_key)
 
     def run(self):
-        return self.__intezer_analysis()
-
-    def __intezer_analysis(self):
         session = requests.session()
         session.headers["Authorization"] = f"Bearer {self.intezer_token}"
 
