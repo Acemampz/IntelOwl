@@ -13,4 +13,6 @@ services:
   nginx:
     build:
       context: ..
-      dockerfile: docker/Dockerfile_nginx_develop
+      dockerfile: docker/Dockerfile_nginx
+      args:
+        INTELOWL_NG_DOCKER_TAG: "intelowlproject/intelowl_ng:develop"

@@ -7,7 +7,7 @@ import requests
 from api_app.analyzers_manager import classes
 from api_app.analyzers_manager.file_analyzers.intezer_scan import (
     get_access_token,
-    get_intezer_base_url,
+    INTEZER_BASE_URL,
 )
 
 from tests.mock_utils import if_mock_connections, patch, MockResponse
@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class IntezerGet(classes.ObservableAnalyzer):
-    base_url: str = get_intezer_base_url()
+    base_url: str = INTEZER_BASE_URL
 
     def set_params(self, params):
         self.__api_key = self._secrets["api_key_name"]

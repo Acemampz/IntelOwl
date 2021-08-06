@@ -21,15 +21,16 @@ from tests.mock_utils import (
 
 logger = logging.getLogger(__name__)
 
+INTEZER_BASE_URL = "https://analyze.intezer.com/api/v2-0"
+
 
 def _retrieve_access_token_from_intezer(api_key):
     """
     this should be done just once in a day
     """
     logger.info("updating access token from intezer")
-    base_url = "https://analyze.intezer.com/api/v2-0"
     response = requests.post(
-        base_url + "/get-access-token", json={"api_key": api_key}
+        INTEZER_BASE_URL + "/get-access-token", json={"api_key": api_key}
     )  # lgtm [py/uninitialized-local-variable]
     response.raise_for_status()
     response_json = response.json()
@@ -60,12 +61,8 @@ def get_access_token(api_key):
     return intezer_token
 
 
-def get_intezer_base_url():
-    return "https://analyze.intezer.com/api/v2-0"
-
-
 class IntezerScan(FileAnalyzer):
-    base_url: str = get_intezer_base_url()
+    base_url: str = INTEZER_BASE_URL
 
     def set_params(self, params):
         self.__api_key = self._secrets["api_key_name"]
@@ -79,9 +76,6 @@ class IntezerScan(FileAnalyzer):
         self.intezer_token = get_access_token(self.__api_key)
 
     def run(self):
-        return self.__intezer_analysis()
-
-    def __intezer_analysis(self):
         session = requests.session()
         session.headers["Authorization"] = f"Bearer {self.intezer_token}"
 
